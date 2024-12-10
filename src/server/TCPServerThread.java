@@ -16,18 +16,20 @@ public class TCPServerThread extends Thread {
 
     public void run() {
 
-        try {
-            is = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
+        try {is = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
             os = new PrintWriter(tcpSocket.getOutputStream());
             line = is.readLine();
             os.write(SERVER_ACK_MESSAGE);
 
-            System.out.println("Client " + tcpSocket.getRemoteSocketAddress() + " sent : " + line);
+            System.out.println("Client " + tcpSocket.getRemoteSocketAddress() + " sent : " + line+"\n");
             if (line.strip().equalsIgnoreCase("All")) {
                 String[] file_name = {"alice.txt", "The Adventure of the Golden Pince-Nez.txt", "The Happy Prince.txt",
                         "The Memoirs of Sherlock Holmes.txt", "The nightingale and the rose.txt", "The Sign of the Four.txt"};
+
                 for (String file : file_name) {
+                    long start_time=  System.currentTimeMillis();
                     try {
+                        File file_to_read= new File("./stories/" + file);
                         BufferedReader reader = new BufferedReader(new FileReader("./stories/" + file));
                         String read_line;
                         do {read_line=reader.readLine();
@@ -37,6 +39,8 @@ public class TCPServerThread extends Thread {
 
                         }
                         while (reader.readLine()!=null);
+                        long end_time= System.currentTimeMillis();
+                        os.write("\n********************************************************************\nThis file elapsed: "+(end_time-start_time)+" sec"+"\nfile size: "+file_to_read.length()/1024+" KB \n");
                         os.flush();
 
                     }catch (IOException e){
@@ -48,7 +52,9 @@ public class TCPServerThread extends Thread {
                 }
             }else{
                 try{
-                    BufferedReader reader= new BufferedReader(new FileReader(line));
+                    long start_time=  System.currentTimeMillis();
+                    BufferedReader reader= new BufferedReader(new FileReader("./src/stories/"+line));
+                    File file_to_read=new File("./src/stories/"+line);
                     String read_line;
                     do {read_line=reader.readLine();
                         if (read_line!=null){
@@ -57,6 +63,8 @@ public class TCPServerThread extends Thread {
 
                     }
                     while (reader.readLine()!=null);
+                    long end_time= System.currentTimeMillis();
+                    os.write("\n********************************************************************\nThis file elapsed: "+(end_time-start_time)+" sec"+"\nfile size: "+file_to_read.length()/1024+" KB \n");
                     os.flush();
                 }catch (IOException e){
                     System.err.println("File cannot readed: "+e.getMessage());
