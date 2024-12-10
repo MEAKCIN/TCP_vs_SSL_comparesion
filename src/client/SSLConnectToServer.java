@@ -44,7 +44,7 @@ public class SSLConnectToServer
     protected int serverPort;
 
 
-    private Socket tcpSocket;
+
     protected int mainPort;
 
     public SSLConnectToServer(String address, int portSSL)
@@ -58,7 +58,7 @@ public class SSLConnectToServer
     public void connect(){
         try{
             sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-            sslSocket = (SSLSocket) sslSocketFactory.createSocket(serverAddress, serverPort);
+            sslSocket = (SSLSocket) sslSocketFactory.createSocket(serverAddress, mainPort);
             sslSocket.startHandshake();
             is=new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
             os= new PrintWriter(sslSocket.getOutputStream());

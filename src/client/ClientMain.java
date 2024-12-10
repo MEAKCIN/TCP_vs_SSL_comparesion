@@ -8,7 +8,7 @@ public class ClientMain {
     public static void main(String[] args) throws IOException {
     	 final  String SERVER_ADRESS ="localhost";
          final  int TCP_PORT = 1234;
-    	 final int SSL_PORT = 4321;
+    	 final int SSL_PORT = 4445;
 
         System.out.println("For connection select protocol type 1 for TCP , 2:  for SSL");
         Scanner scanner= new Scanner(System.in);

@@ -57,8 +57,8 @@ public class SSLServerThread extends Thread
                 }else{
                   try{
                       long start_time=  System.currentTimeMillis();
-                      BufferedReader reader= new BufferedReader(new FileReader("./src/stories/"+line));
-                      File file_to_read=new File("./src/stories/"+line);
+                      BufferedReader reader= new BufferedReader(new FileReader("./stories/"+line));
+                      File file_to_read=new File("./stories/"+line);
                       String read_line;
                       do {read_line=reader.readLine();
                           if (read_line!=null){
